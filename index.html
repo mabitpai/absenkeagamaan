@@ -8,30 +8,77 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <style id="dynamic-print-page">@page { size: A4 portrait; margin: 0; }</style>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
     body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; }
+    .font-serif-cert { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* ===== DESAIN KARTU QR ORNAMEN ZAMRUD-EMAS (88 x 56 mm) ===== */
     .id-card {
-      width: 88mm; height: 56mm; background: #ffffff; border: 1px dashed #64748b; border-radius: 3mm;
-      padding: 2.2mm 2.8mm; box-sizing: border-box; display: flex; flex-direction: column;
-      justify-content: space-between; position: relative; overflow: hidden; color: #0f172a;
+      width: 88mm; height: 56mm;
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 60%, #fefce8 100%);
+      border: 1.5pt solid #065f46;
+      border-radius: 3mm;
+      padding: 2mm 2.6mm;
+      box-sizing: border-box;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden; color: #0f172a;
+      box-shadow: inset 0 0 0 1.2pt #d97706;
     }
-    .card-qr-student svg { width: 22mm; height: 22mm; display: block; }
-    .card-qr-kepsek svg { width: 9.5mm; height: 9.5mm; display: block; }
+    .id-card::before, .id-card::after {
+      content: ''; position: absolute; width: 7mm; height: 7mm;
+      border-color: #d97706; pointer-events: none; z-index: 2;
+    }
+    .id-card::before { top: 1.2mm; left: 1.2mm; border-top: 1.5pt solid #d97706; border-left: 1.5pt solid #d97706; border-radius: 1.5mm 0 0 0; }
+    .id-card::after { bottom: 1.2mm; right: 1.2mm; border-bottom: 1.5pt solid #d97706; border-right: 1.5pt solid #d97706; border-radius: 0 0 1.5mm 0; }
+    .card-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
+    .card-inner { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+    .card-qr-student svg { width: 21mm; height: 21mm; display: block; }
+    .card-qr-kepsek svg { width: 9.2mm; height: 9.2mm; display: block; }
+
     .a4-card-sheet {
       width: 210mm; min-height: 297mm; padding: 10mm 12mm; margin: 0 auto 12px auto;
       background: #ffffff; box-sizing: border-box; display: grid;
       grid-template-columns: repeat(2, 88mm); grid-template-rows: repeat(4, 56mm);
       gap: 6mm 10mm; justify-content: center; align-content: start;
     }
+
+    /* ===== DESAIN SERTIFIKAT PESANTREN RAMADAN ORNAMEN ZAMRUD-EMAS (A4 LANDSCAPE) ===== */
+    .cert-page {
+      width: 297mm; height: 210mm; padding: 9mm; margin: 0 auto 12px auto;
+      background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 45%, #fffbeb 100%);
+      box-sizing: border-box; position: relative; overflow: hidden;
+      color: #0f172a;
+    }
+    .cert-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
+    .cert-frame-outer {
+      position: relative; z-index: 1; width: 100%; height: 100%;
+      border: 4pt solid #065f46; padding: 3.5mm; box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.88);
+    }
+    .cert-frame-inner {
+      width: 100%; height: 100%; border: 1.5pt solid #d97706;
+      padding: 6mm 14mm; box-sizing: border-box;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative;
+    }
+    .cert-corner {
+      position: absolute; width: 14mm; height: 14mm; border-color: #065f46; pointer-events: none;
+    }
+    .cert-tl { top: 2.5mm; left: 2.5mm; border-top: 3pt solid #065f46; border-left: 3pt solid #065f46; }
+    .cert-tr { top: 2.5mm; right: 2.5mm; border-top: 3pt solid #065f46; border-right: 3pt solid #065f46; }
+    .cert-bl { bottom: 2.5mm; left: 2.5mm; border-bottom: 3pt solid #065f46; border-left: 3pt solid #065f46; }
+    .cert-br { bottom: 2.5mm; right: 2.5mm; border-bottom: 3pt solid #065f46; border-right: 3pt solid #065f46; }
+    .cert-qr-kepsek svg { width: 20mm; height: 20mm; display: block; margin: 0 auto; }
+
     @media print {
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
       body { background: #ffffff !important; margin: 0; padding: 0; }
       .no-print { display: none !important; }
-      .print-only { display: block !important; }
-      .a4-card-sheet { margin: 0 auto; box-shadow: none !important; page-break-after: always; break-after: page; }
-      .a4-card-sheet:last-child { page-break-after: auto; break-after: auto; }
-      @page { size: A4 portrait; margin: 0; }
+      .print-active { display: block !important; }
+      .a4-card-sheet, .cert-page { margin: 0 auto; box-shadow: none !important; page-break-after: always; break-after: page; }
+      .a4-card-sheet:last-child, .cert-page:last-child { page-break-after: auto; break-after: auto; }
     }
   </style>
 </head>
@@ -69,7 +116,7 @@
           <i class="fa-solid fa-magnifying-glass-chart text-amber-300 text-lg"></i>
           <div>
             <h2 class="font-extrabold text-sm sm:text-base">Cek Mandiri Orang Tua & Murid</h2>
-            <p class="text-[11px] text-emerald-200">Masukkan NIS untuk memantau kehadiran sholat, status peringatan dini, & progres Pesantren Ramadan.</p>
+            <p class="text-[11px] text-emerald-200">Masukkan NIS untuk memantau kehadiran sholat, status peringatan dini, & cetak Sertifikat Pesantren Ramadan.</p>
           </div>
         </div>
       </div>
@@ -214,16 +261,19 @@
           <i class="fa-solid fa-camera mr-1"></i> Scan QR
         </button>
         <button onclick="switchTab('rekap')" id="tab-btn-rekap" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-emerald-800/70 text-white hover:bg-emerald-700 whitespace-nowrap transition">
-          <i class="fa-solid fa-table-list mr-1"></i> Rekap & Belum Absen
+          <i class="fa-solid fa-table-list mr-1"></i> Rekap
         </button>
         <button onclick="switchTab('warning')" id="tab-btn-warning" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-emerald-800/70 text-white hover:bg-emerald-700 whitespace-nowrap transition">
           <i class="fa-solid fa-triangle-exclamation mr-1"></i> Peringatan Dini
         </button>
         <button onclick="switchTab('kartu')" id="tab-btn-kartu" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-emerald-800/70 text-white hover:bg-emerald-700 whitespace-nowrap transition">
-          <i class="fa-solid fa-id-card mr-1"></i> Cetak Kartu
+          <i class="fa-solid fa-id-card mr-1"></i> Kartu QR
+        </button>
+        <button onclick="switchTab('sertifikat')" id="tab-btn-sertifikat" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-emerald-800/70 text-white hover:bg-emerald-700 whitespace-nowrap transition">
+          <i class="fa-solid fa-award mr-1"></i> Sertifikat
         </button>
         <button onclick="switchTab('kegiatan')" id="tab-btn-kegiatan" class="hidden flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-emerald-800/70 text-white hover:bg-emerald-700 whitespace-nowrap transition">
-          <i class="fa-solid fa-list-check mr-1"></i> Kelola Kegiatan
+          <i class="fa-solid fa-list-check mr-1"></i> Kegiatan
         </button>
       </div>
     </div>
@@ -309,14 +359,11 @@
             <h2 class="text-lg font-extrabold text-slate-800">Rekap Kehadiran & Daftar Belum Absen</h2>
             <p class="text-xs text-slate-500">Pantau murid yang sudah ter-scan maupun yang belum absen hari ini.</p>
           </div>
-          <div class="flex gap-2">
-            <button onclick="exportCurrentRekapCSV()" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-sm">
-              <i class="fa-solid fa-file-excel mr-1.5"></i> Export CSV
-            </button>
-          </div>
+          <button onclick="exportCurrentRekapCSV()" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-sm">
+            <i class="fa-solid fa-file-excel mr-1.5"></i> Export CSV
+          </button>
         </div>
 
-        <!-- Sub-Tab Toggle: Sudah Absen vs Belum Absen -->
         <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1.5 rounded-xl">
           <button onclick="setRekapMode('sudah')" id="subtab-sudah" class="py-2 rounded-lg text-xs font-extrabold bg-white text-emerald-900 shadow-sm transition">
             <i class="fa-solid fa-check-double mr-1"></i> Sudah Absen
@@ -341,7 +388,6 @@
           </div>
         </div>
 
-        <!-- PANEL SUDAH ABSEN -->
         <div id="panel-rekap-sudah" class="space-y-4">
           <div class="grid grid-cols-3 gap-3 text-center">
             <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
@@ -376,11 +422,8 @@
           </div>
         </div>
 
-        <!-- PANEL BELUM ABSEN -->
         <div id="panel-rekap-belum" class="hidden space-y-3">
-          <div id="belum-info-banner" class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs font-semibold flex items-center justify-between gap-2">
-            <span>Menampilkan murid yang belum ter-scan pada tanggal & kegiatan terpilih.</span>
-          </div>
+          <div id="belum-info-banner" class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs font-semibold"></div>
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-xs">
               <thead>
@@ -405,7 +448,7 @@
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 class="text-lg font-extrabold text-rose-900"><i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1.5"></i>Peringatan Dini Kehadiran Sholat (&lt; 75%)</h2>
-            <p id="warn-subtitle" class="text-xs text-slate-500">Daftar murid dengan persentase kehadiran Sholat Dzuhur, Ashar, & Jumat/Keputrian di bawah 75% semester aktif.</p>
+            <p id="warn-subtitle" class="text-xs text-slate-500">Daftar murid dengan persentase kehadiran Sholat di bawah 75% semester aktif.</p>
           </div>
           <button onclick="exportWarningCSV()" class="px-4 py-2 rounded-xl bg-rose-700 hover:bg-rose-800 text-white text-xs font-bold shadow-sm">
             <i class="fa-solid fa-file-excel mr-1.5"></i> Export Daftar Pembinaan
@@ -446,13 +489,13 @@
       </div>
     </section>
 
-    <!-- TAB 4: CETAK KARTU -->
+    <!-- TAB 4: CETAK KARTU QR (ORNAMEN ZAMRUD-EMAS) -->
     <section id="tab-kartu" class="hidden space-y-4">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-lg font-extrabold text-slate-800">Cetak Kartu Absensi QR (1 Sisi — 8 Kartu/A4)</h2>
-            <p class="text-xs text-slate-500">Dilengkapi Kop Sekolah (`kop.png`), QR Data Murid, QR Pengesahan Kepala Sekolah, dan Tata Tertib.</p>
+            <h2 class="text-lg font-extrabold text-slate-800">Cetak Kartu Absensi QR (Ornamen Zamrud-Emas)</h2>
+            <p class="text-xs text-slate-500">Format A4 Portrait (8 Kartu/Lembar) dengan bingkai ornamen, Kop Sekolah, QR Murid & QR Kepsek.</p>
           </div>
           <div class="flex flex-wrap gap-2">
             <button onclick="printCards('single')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold"><i class="fa-solid fa-print mr-1"></i> Cetak 1 Murid</button>
@@ -478,7 +521,53 @@
       </div>
     </section>
 
-    <!-- TAB 5: KELOLA KEGIATAN (ADMIN) -->
+    <!-- TAB 5: SERTIFIKAT PESANTREN RAMADAN (A4 LANDSCAPE) -->
+    <section id="tab-sertifikat" class="hidden space-y-4">
+      <div class="bg-white rounded-2xl shadow-sm border border-amber-300 p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-lg font-extrabold text-emerald-950"><i class="fa-solid fa-award text-amber-500 mr-1.5"></i>Sertifikat Pesantren Ramadan (A4 Landscape)</h2>
+            <p id="cert-subtitle" class="text-xs text-slate-500">Otomatis bagi murid dengan kehadiran Pesantren Ramadan minimal 80%.</p>
+          </div>
+          <button onclick="printCertClass()" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-sm">
+            <i class="fa-solid fa-print mr-1.5"></i> Cetak 1 Kelas (Yang Lulus ≥80%)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Pilih Kelas</label>
+            <select id="cert-rombel" onchange="renderCertTable()" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs font-bold"></select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Judul / Tahun Hijriah</label>
+            <input id="cert-event-title" type="text" value="PESANTREN RAMADAN 1448 H / 2027 M" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs font-bold">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Tempat & Tanggal Sertifikat</label>
+            <input id="cert-date-text" type="text" value="Lumajang, Maret 2027" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs font-bold">
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-emerald-50 text-emerald-950 uppercase">
+                <th class="p-2.5 border w-10 text-center">No</th>
+                <th class="p-2.5 border">NIS</th>
+                <th class="p-2.5 border">Nama Murid</th>
+                <th class="p-2.5 border text-center">Kehadiran Ramadan</th>
+                <th class="p-2.5 border text-center">Status (≥80%)</th>
+                <th class="p-2.5 border text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="cert-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: KELOLA KEGIATAN (ADMIN) -->
     <section id="tab-kegiatan" class="hidden space-y-4">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
         <div>
@@ -522,7 +611,9 @@
   </main>
 </div>
 
-<div id="print-area-cards" class="hidden print-only"></div>
+<!-- AREA CETAK TERPISAH (KARTU PORTRAIT vs SERTIFIKAT LANDSCAPE) -->
+<div id="print-area-cards" class="hidden"></div>
+<div id="print-area-certs" class="hidden"></div>
 
 <script>
 const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwxxEX6agmAD5LQWHEg_iJ4bhgE71sKvxEZEQwnICG2o1dpSathuoPeDXBF7je9fa3gIw/exec';
@@ -555,9 +646,88 @@ let pendingQueue = JSON.parse(localStorage.getItem('absen_pending_queue')) || []
 let currentUser = null;
 let currentScanStatus = 'Hadir';
 let currentRekapMode = 'sudah';
+let lastPublicCheckedData = null;
 let html5QrCode = null;
 let lastScannedText = '';
 let lastScanTime = 0;
+
+function makeQrSvg(text, cellSize = 2) {
+  try { const qr = qrcode(0, 'M'); qr.addData(text); qr.make(); return qr.createSvgTag({ cellSize, margin: 1, scalable: true }); } catch (e) { return ''; }
+}
+const KEPSEK_QR_SVG = makeQrSvg(KEPSEK_DATA.signUrl, 2);
+
+// ==================== HELPER CETAK DINAMIS (PORTRAIT vs LANDSCAPE) ====================
+function triggerPrint(mode, htmlContent) {
+  const pageStyle = document.getElementById('dynamic-print-page');
+  const cardsEl = document.getElementById('print-area-cards');
+  const certsEl = document.getElementById('print-area-certs');
+
+  cardsEl.className = 'hidden';
+  certsEl.className = 'hidden';
+
+  if (mode === 'cert') {
+    pageStyle.textContent = '@page { size: A4 landscape; margin: 0; }';
+    certsEl.innerHTML = htmlContent;
+    certsEl.className = 'hidden print-active';
+  } else {
+    pageStyle.textContent = '@page { size: A4 portrait; margin: 0; }';
+    cardsEl.innerHTML = htmlContent;
+    cardsEl.className = 'hidden print-active';
+  }
+  setTimeout(() => window.print(), 120);
+}
+
+// ==================== BUILDER SERTIFIKAT PESANTREN RAMADAN ====================
+function buildSingleCertificateHtml(stu, pct, eventTitle, dateText) {
+  const certNo = `421.3 / ${stu.nis} / PR-SMAYO / ${new Date().getFullYear()}`;
+  const predikat = pct >= 95 ? 'SANGAT BAIK (MUMTAZ)' : (pct >= 85 ? 'BAIK (JAYYID JIDDAN)' : 'BAIK');
+  return `
+    <div class="cert-page">
+      <img src="bg-sertifikat.png" class="cert-bg-img" onerror="this.style.display='none'">
+      <div class="cert-frame-outer">
+        <div class="cert-frame-inner">
+          <div class="cert-corner cert-tl"></div>
+          <div class="cert-corner cert-tr"></div>
+          <div class="cert-corner cert-bl"></div>
+          <div class="cert-corner cert-br"></div>
+
+          <!-- Header Kop -->
+          <div class="text-center">
+            <img src="kop.png" alt="Kop Sekolah" class="h-[24mm] object-contain mx-auto mb-1"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <div style="display:none;" class="font-extrabold text-lg text-emerald-950 uppercase">SMA NEGERI 1 YOSOWILANGUN</div>
+            <div class="border-b-2 border-emerald-900 w-4/5 mx-auto my-1"></div>
+          </div>
+
+          <!-- Isi Sertifikat -->
+          <div class="text-center space-y-2 my-auto">
+            <div class="font-serif-cert text-4xl font-extrabold tracking-[0.18em] text-emerald-950 uppercase">SERTIFIKAT</div>
+            <div class="text-xs font-bold tracking-widest text-amber-700 uppercase">Nomor: ${certNo}</div>
+            <div class="text-sm text-slate-700 pt-2">Diberikan dengan penuh rasa syukur kepada:</div>
+            <div class="font-serif-cert text-3xl font-extrabold text-slate-900 uppercase border-b-2 border-amber-500 inline-block px-8 pb-1">${stu.name}</div>
+            <div class="text-xs font-bold text-slate-600">NIS: ${stu.nis} &nbsp;•&nbsp; Kelas: ${stu.rombel}</div>
+            <p class="text-sm text-slate-800 max-w-2xl mx-auto leading-relaxed pt-1">
+              Telah mengikuti dan menyelesaikan rangkaian kegiatan <strong>${eventTitle}</strong> di <strong>SMA Negeri 1 Yosowilangun</strong> dengan tingkat kehadiran sebesar <strong>${pct}%</strong> dan dinyatakan <strong>LULUS</strong> dengan predikat <strong>${predikat}</strong>.
+            </p>
+          </div>
+
+          <!-- Footer TTD QR Kepsek -->
+          <div class="flex items-end justify-between px-6 pt-2">
+            <div class="text-[10px] text-slate-500 max-w-[90mm] leading-snug">
+              <em>Sertifikat ini diterbitkan secara elektronik dan sah berdasarkan data presensi resmi Sistem Keagamaan SMA Negeri 1 Yosowilangun.</em>
+            </div>
+            <div class="text-center text-xs leading-tight min-w-[70mm]">
+              <div>${dateText}</div>
+              <div class="font-semibold mb-1">Kepala SMA Negeri 1 Yosowilangun,</div>
+              <div class="cert-qr-kepsek my-1">${KEPSEK_QR_SVG}</div>
+              <div class="font-extrabold underline text-slate-900 mt-1">${KEPSEK_DATA.name}</div>
+              <div class="text-[11px] text-slate-700">NIP. ${KEPSEK_DATA.nip}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
 
 // ==================== PORTAL PUBLIK & CEK MANDIRI NIS ====================
 async function loadPublicDashboard() {
@@ -620,10 +790,12 @@ async function handleStudentCheck(e) {
     const res = await fetch(`${GAS_WEBAPP_URL}?mode=student_check&nis=${encodeURIComponent(nis)}`);
     const data = await res.json();
     if (!data.found) {
+      lastPublicCheckedData = null;
       box.innerHTML = `<div class="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold text-center"><i class="fa-solid fa-circle-exclamation mr-1"></i> NIS "${nis}" tidak ditemukan di database sekolah.</div>`;
       return;
     }
 
+    lastPublicCheckedData = data;
     const s = data.student, sh = data.sholat, rm = data.ramadan;
     const warningHtml = sh.earlyWarning
       ? `<div class="p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-900 text-xs flex items-start gap-2.5">
@@ -634,11 +806,16 @@ async function handleStudentCheck(e) {
            <i class="fa-solid fa-circle-check text-emerald-600"></i> Kehadiran sholat berjamaah semester ${data.activeSemester} terpantau baik (${sh.overallPct}%).
          </div>`;
 
-    const ramadanBadge = rm.total === 0
+    const ramadanSection = rm.total === 0
       ? `<span class="text-slate-500">Belum ada sesi Pesantren Ramadan tercatat.</span>`
       : (rm.eligibleCertificate
-          ? `<span class="text-emerald-700 font-bold"><i class="fa-solid fa-award mr-1"></i>Memenuhi syarat Sertifikat Pesantren Ramadan (${rm.pct}% — ${rm.hadir}/${rm.total} sesi).</span>`
-          : `<span class="text-amber-700 font-semibold">Kehadiran Pesantren Ramadan: ${rm.pct}% (${rm.hadir}/${rm.total} sesi). Syarat sertifikat minimal 80%.</span>`);
+          ? `<div class="flex flex-wrap items-center justify-between gap-2 w-full">
+               <span class="text-emerald-800 font-bold"><i class="fa-solid fa-award text-amber-500 mr-1"></i>Memenuhi syarat Sertifikat Pesantren Ramadan (${rm.pct}% — ${rm.hadir}/${rm.total} sesi).</span>
+               <button onclick="printPublicCertificate()" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-sm transition">
+                 <i class="fa-solid fa-print mr-1"></i> Cetak Sertifikat Ramadan
+               </button>
+             </div>`
+          : `<span class="text-amber-800 font-semibold">Kehadiran Pesantren Ramadan: ${rm.pct}% (${rm.hadir}/${rm.total} sesi). Syarat cetak sertifikat minimal 80%.</span>`);
 
     const logsHtml = (data.recentLogs || []).length === 0
       ? `<tr><td colspan="3" class="p-4 text-center text-slate-400">Belum ada riwayat scan kehadiran.</td></tr>`
@@ -663,7 +840,7 @@ async function handleStudentCheck(e) {
         <div class="p-3 rounded-xl border border-slate-200 bg-white"><div class="text-slate-500 font-bold">Sholat Ashar</div><div class="text-lg font-extrabold text-emerald-800 mt-0.5">${sh.ashar.pct}% <span class="text-xs font-normal text-slate-500">(${sh.ashar.hadir}/${sh.ashar.total})</span></div></div>
         <div class="p-3 rounded-xl border border-slate-200 bg-white"><div class="text-slate-500 font-bold">Jumat / Keputrian</div><div class="text-lg font-extrabold text-emerald-800 mt-0.5">${sh.jumat.pct}% <span class="text-xs font-normal text-slate-500">(${sh.jumat.hadir}/${sh.jumat.total})</span></div></div>
       </div>
-      <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 text-xs"><i class="fa-solid fa-moon text-amber-600 mr-1.5"></i>${ramadanBadge}</div>
+      <div class="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200 text-xs flex items-center">${ramadanSection}</div>
       <div>
         <div class="text-xs font-bold text-slate-700 mb-2">Riwayat 30 Kehadiran Terakhir</div>
         <div class="overflow-x-auto max-h-[240px] overflow-y-auto">
@@ -679,6 +856,17 @@ async function handleStudentCheck(e) {
     btn.disabled = false;
     btn.innerHTML = '<i class="fa-solid fa-search mr-1.5"></i> Cek Kehadiran';
   }
+}
+
+function printPublicCertificate() {
+  if (!lastPublicCheckedData || !lastPublicCheckedData.ramadan.eligibleCertificate) return;
+  const html = buildSingleCertificateHtml(
+    lastPublicCheckedData.student,
+    lastPublicCheckedData.ramadan.pct,
+    'PESANTREN RAMADAN 1448 H / 2027 M',
+    'Lumajang, Maret 2027'
+  );
+  triggerPrint('cert', html);
 }
 
 // ==================== LOGIN PETUGAS ====================
@@ -791,6 +979,7 @@ async function syncAllData(showAlert = false) {
       renderRekapView();
       renderWarningTable();
       onCardRombelChange();
+      renderCertTable();
       renderActivitiesAdmin();
       if (showAlert) alert(`Sinkronisasi berhasil! (${studentsDB.length} murid, ${activitiesDB.length} kegiatan)`);
     }
@@ -813,24 +1002,27 @@ function initWorkspace() {
   populateActivityDropdowns();
 
   const allowedRombels = currentUser.classes === 'ALL' ? ALL_ROMBELS : currentUser.classes;
-  const rombelOpts = (allowedRombels.length > 1 ? '<option value="ALL">Semua Kelas Ampuan</option>' : '') +
+  const rombelOptsWithAll = (allowedRombels.length > 1 ? '<option value="ALL">Semua Kelas Ampuan</option>' : '') +
     allowedRombels.map(r => `<option value="${r}">Kelas ${r}</option>`).join('');
+  const rombelOptsOnly = allowedRombels.map(r => `<option value="${r}">Kelas ${r}</option>`).join('');
 
-  document.getElementById('rekap-rombel').innerHTML = rombelOpts;
-  document.getElementById('warn-rombel').innerHTML = rombelOpts;
-  document.getElementById('card-rombel').innerHTML = allowedRombels.map(r => `<option value="${r}">Kelas ${r}</option>`).join('');
+  document.getElementById('rekap-rombel').innerHTML = rombelOptsWithAll;
+  document.getElementById('warn-rombel').innerHTML = rombelOptsWithAll;
+  document.getElementById('card-rombel').innerHTML = rombelOptsOnly;
+  document.getElementById('cert-rombel').innerHTML = rombelOptsOnly;
 
   updatePendingBadge();
   renderScanStats();
   renderRekapView();
   renderWarningTable();
   onCardRombelChange();
+  renderCertTable();
   renderActivitiesAdmin();
 }
 
 function switchTab(tab) {
   if (tab !== 'scan') stopScanner();
-  ['scan', 'rekap', 'warning', 'kartu', 'kegiatan'].forEach(t => {
+  ['scan', 'rekap', 'warning', 'kartu', 'sertifikat', 'kegiatan'].forEach(t => {
     document.getElementById(`tab-${t}`).classList.toggle('hidden', t !== tab);
     const btn = document.getElementById(`tab-btn-${t}`);
     if (!btn.classList.contains('hidden')) {
@@ -842,7 +1034,79 @@ function switchTab(tab) {
   if (tab === 'rekap') renderRekapView();
   if (tab === 'warning') renderWarningTable();
   if (tab === 'kartu') onCardRombelChange();
+  if (tab === 'sertifikat') renderCertTable();
   if (tab === 'kegiatan') renderActivitiesAdmin();
+}
+
+// ==================== SERTIFIKAT RAMADAN (PETUGAS) ====================
+function computeRamadanStatsForRombel(rombel) {
+  const ramadanSessions = new Set();
+  const stuCounts = {};
+  logsDB.forEach(l => {
+    if (!l.kegiatan || !l.kegiatan.toLowerCase().includes('ramadan') || !l.tanggal) return;
+    ramadanSessions.add(`${l.tanggal}_${l.kegiatan}`);
+    if (l.status === 'Hadir' || (l.status && l.status.includes('Haid'))) {
+      stuCounts[String(l.nis)] = (stuCounts[String(l.nis)] || 0) + 1;
+    }
+  });
+
+  const totalSessions = ramadanSessions.size;
+  const list = studentsDB.filter(s => s.rombel === rombel).map(s => {
+    const hadir = stuCounts[String(s.nis)] || 0;
+    const pct = totalSessions > 0 ? Math.min(100, Math.round((hadir / totalSessions) * 100)) : 0;
+    return { ...s, hadir, total: totalSessions, pct, eligible: totalSessions > 0 && pct >= 80 };
+  });
+  return { list, totalSessions };
+}
+
+function renderCertTable() {
+  const rombel = document.getElementById('cert-rombel').value;
+  const { list, totalSessions } = computeRamadanStatsForRombel(rombel);
+  const eligibleCount = list.filter(s => s.eligible).length;
+  document.getElementById('cert-subtitle').textContent = `Total ${totalSessions} sesi Pesantren Ramadan tercatat • ${eligibleCount} dari ${list.length} murid Kelas ${rombel} memenuhi syarat (≥80%).`;
+
+  const tbody = document.getElementById('cert-tbody');
+  if (list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">Belum ada murid di kelas ini.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map((s, idx) => `
+    <tr class="border-b hover:bg-emerald-50/40">
+      <td class="p-2 border text-center">${idx + 1}</td>
+      <td class="p-2 border font-mono">${s.nis}</td>
+      <td class="p-2 border font-bold text-slate-800">${s.name}</td>
+      <td class="p-2 border text-center">${s.hadir} / ${s.total} (${s.pct}%)</td>
+      <td class="p-2 border text-center">
+        ${s.eligible
+          ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Lulus (≥80%)</span>'
+          : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500">Belum Memenuhi</span>'}
+      </td>
+      <td class="p-2 border text-center">
+        <button onclick="printSingleCertOfficer('${s.nis}', ${s.pct})" class="px-2.5 py-1 rounded ${s.eligible ? 'bg-emerald-700 hover:bg-emerald-800 text-white' : 'bg-slate-200 hover:bg-slate-300 text-slate-700'} font-bold text-[10px]">
+          <i class="fa-solid fa-print mr-1"></i>Cetak
+        </button>
+      </td>
+    </tr>`).join('');
+}
+
+function printSingleCertOfficer(nis, pct) {
+  const stu = studentsDB.find(s => String(s.nis) === String(nis));
+  if (!stu) return;
+  const title = document.getElementById('cert-event-title').value.trim() || 'PESANTREN RAMADAN';
+  const dateText = document.getElementById('cert-date-text').value.trim() || 'Lumajang, Maret 2027';
+  triggerPrint('cert', buildSingleCertificateHtml(stu, pct, title, dateText));
+}
+
+function printCertClass() {
+  const rombel = document.getElementById('cert-rombel').value;
+  const { list } = computeRamadanStatsForRombel(rombel);
+  const eligible = list.filter(s => s.eligible);
+  if (eligible.length === 0) return alert(`Belum ada murid di Kelas ${rombel} yang memenuhi syarat kehadiran Ramadan ≥80%.`);
+  const title = document.getElementById('cert-event-title').value.trim() || 'PESANTREN RAMADAN';
+  const dateText = document.getElementById('cert-date-text').value.trim() || 'Lumajang, Maret 2027';
+  const html = eligible.map(s => buildSingleCertificateHtml(s, s.pct, title, dateText)).join('');
+  triggerPrint('cert', html);
 }
 
 // ==================== REKAP & BELUM ABSEN ====================
@@ -864,10 +1128,7 @@ function setRekapMode(mode) {
   renderRekapView();
 }
 
-function renderRekapView() {
-  renderRekapTable();
-  renderBelumAbsenTable();
-}
+function renderRekapView() { renderRekapTable(); renderBelumAbsenTable(); }
 
 function getFilteredRekap() {
   const tgl = document.getElementById('rekap-date').value;
@@ -907,7 +1168,6 @@ function getBelumAbsenList() {
   let keg = document.getElementById('rekap-kegiatan').value;
   const rom = document.getElementById('rekap-rombel').value;
   const allowed = currentUser.classes === 'ALL' ? null : currentUser.classes;
-
   if (!tgl) return { list: [], tgl, keg, error: 'Pilih tanggal terlebih dahulu.' };
   if (keg === 'ALL') keg = activitiesDB[0]?.nama || 'Sholat Dzuhur';
 
@@ -925,19 +1185,9 @@ function renderBelumAbsenTable() {
   document.getElementById('belum-count-pill').textContent = list.length;
   const banner = document.getElementById('belum-info-banner');
   const tbody = document.getElementById('belum-tbody');
-
-  if (error) {
-    banner.textContent = error;
-    tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">${error}</td></tr>`;
-    return;
-  }
-
+  if (error) { banner.textContent = error; tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">${error}</td></tr>`; return; }
   banner.innerHTML = `<span><strong>${list.length} Murid</strong> belum absen pada <strong>${keg}</strong> (${tgl}).</span>`;
-  if (list.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-emerald-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Alhamdulillah, seluruh murid pada filter ini sudah absen!</td></tr>';
-    return;
-  }
-
+  if (list.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-emerald-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Alhamdulillah, seluruh murid pada filter ini sudah absen!</td></tr>'; return; }
   tbody.innerHTML = list.slice(0, 300).map((s, idx) => `
     <tr class="border-b hover:bg-rose-50/40">
       <td class="p-2 border text-center">${idx + 1}</td>
@@ -956,7 +1206,6 @@ function quickAbsenFromBelum(nis, nama, rombel, status) {
   const tgl = document.getElementById('rekap-date').value;
   let keg = document.getElementById('rekap-kegiatan').value;
   if (keg === 'ALL') keg = activitiesDB[0]?.nama || 'Sholat Dzuhur';
-
   const recId = `${tgl}_${keg}_${nis}`;
   const waktu = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   const record = { id: recId, tanggal: tgl, waktu, kegiatan: keg, nis: String(nis), nama, rombel: String(rombel).toUpperCase(), status, petugas: currentUser ? currentUser.name : '-' };
@@ -965,9 +1214,7 @@ function quickAbsenFromBelum(nis, nama, rombel, status) {
   pendingQueue = pendingQueue.filter(l => l.id !== recId); pendingQueue.push(record);
   localStorage.setItem('absen_logs_db', JSON.stringify(logsDB));
   localStorage.setItem('absen_pending_queue', JSON.stringify(pendingQueue));
-
-  updatePendingBadge();
-  renderRekapView();
+  updatePendingBadge(); renderRekapView();
   if (pendingQueue.length >= 15) flushAttendanceQueue(false);
 }
 
@@ -992,25 +1239,19 @@ function computeWarningList() {
   const activeMonth = new Date().getMonth() + 1;
   const activeSem = activeMonth >= 7 ? 'Ganjil' : 'Genap';
   const sholatSet = { 'Sholat Dzuhur': true, 'Sholat Ashar': true, 'Sholat Jumat / Keputrian': true };
-
   const sessions = new Set();
   const stuCounts = {};
   logsDB.forEach(l => {
     if (!sholatSet[l.kegiatan] || !l.tanggal) return;
     const m = parseInt(l.tanggal.split('-')[1], 10);
-    const sem = m >= 7 ? 'Ganjil' : 'Genap';
-    if (sem !== activeSem) return;
-
+    if ((m >= 7 ? 'Ganjil' : 'Genap') !== activeSem) return;
     sessions.add(`${l.tanggal}_${l.kegiatan}`);
-    if (l.status === 'Hadir' || (l.status && l.status.includes('Haid'))) {
-      stuCounts[String(l.nis)] = (stuCounts[String(l.nis)] || 0) + 1;
-    }
+    if (l.status === 'Hadir' || (l.status && l.status.includes('Haid'))) stuCounts[String(l.nis)] = (stuCounts[String(l.nis)] || 0) + 1;
   });
 
   const totalSessions = sessions.size;
   const romFilter = document.getElementById('warn-rombel').value;
   const allowed = currentUser.classes === 'ALL' ? null : currentUser.classes;
-
   if (totalSessions === 0) return { list: [], totalSessions: 0, activeSem };
 
   const list = [];
@@ -1021,7 +1262,6 @@ function computeWarningList() {
     const pct = Math.min(100, Math.round((hadir / totalSessions) * 100));
     if (pct < 75) list.push({ ...s, hadir, total: totalSessions, pct });
   });
-
   list.sort((a, b) => a.pct - b.pct || a.rombel.localeCompare(b.rombel) || a.name.localeCompare(b.name));
   return { list, totalSessions, activeSem };
 }
@@ -1031,17 +1271,9 @@ function renderWarningTable() {
   document.getElementById('warn-subtitle').textContent = `Semester ${activeSem} • Total ${totalSessions} sesi sholat tercatat di perangkat.`;
   document.getElementById('warn-stat-kritis').textContent = list.filter(i => i.pct < 60).length;
   document.getElementById('warn-stat-bina').textContent = list.filter(i => i.pct >= 60 && i.pct < 75).length;
-
   const tbody = document.getElementById('warn-tbody');
-  if (totalSessions === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">Belum ada data sesi sholat pada semester aktif.</td></tr>';
-    return;
-  }
-  if (list.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-emerald-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Alhamdulillah, tidak ada murid di bawah 75% pada filter ini!</td></tr>';
-    return;
-  }
-
+  if (totalSessions === 0) { tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">Belum ada data sesi sholat pada semester aktif.</td></tr>'; return; }
+  if (list.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-emerald-700 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>Alhamdulillah, tidak ada murid di bawah 75% pada filter ini!</td></tr>'; return; }
   tbody.innerHTML = list.map((s, idx) => `
     <tr class="border-b hover:bg-rose-50/40">
       <td class="p-2 border text-center">${idx + 1}</td>
@@ -1050,11 +1282,7 @@ function renderWarningTable() {
       <td class="p-2 border">${s.rombel}</td>
       <td class="p-2 border text-center">${s.hadir} / ${s.total}</td>
       <td class="p-2 border text-center font-extrabold ${s.pct < 60 ? 'text-rose-700' : 'text-amber-700'}">${s.pct}%</td>
-      <td class="p-2 border text-center">
-        ${s.pct < 60
-          ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">Kritis (&lt;60%)</span>'
-          : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Perlu Pembinaan</span>'}
-      </td>
+      <td class="p-2 border text-center">${s.pct < 60 ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">Kritis (&lt;60%)</span>' : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Perlu Pembinaan</span>'}</td>
     </tr>`).join('');
 }
 
@@ -1071,7 +1299,7 @@ function downloadCSV(content, filename) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click();
 }
 
-// ==================== KELOLA KEGIATAN, SCANNER, & KARTU ====================
+// ==================== KELOLA KEGIATAN, SCANNER, & KARTU QR ====================
 function renderActivitiesAdmin() {
   const tbody = document.getElementById('activities-admin-tbody');
   if (!tbody) return;
@@ -1090,21 +1318,18 @@ async function addActivity(e) {
   const nama = document.getElementById('new-act-name').value.trim();
   if (!nama) return;
   if (activitiesDB.some(a => a.nama.toLowerCase() === nama.toLowerCase())) return alert('Kegiatan sudah ada.');
-  activitiesDB.push({ kategori, nama });
-  document.getElementById('new-act-name').value = '';
+  activitiesDB.push({ kategori, nama }); document.getElementById('new-act-name').value = '';
   await saveActivitiesToCloud();
 }
 
 async function deleteActivity(idx) {
   if (!confirm(`Hapus kegiatan "${activitiesDB[idx].nama}"?`)) return;
-  activitiesDB.splice(idx, 1);
-  await saveActivitiesToCloud();
+  activitiesDB.splice(idx, 1); await saveActivitiesToCloud();
 }
 
 async function saveActivitiesToCloud() {
   localStorage.setItem('absen_activities_db', JSON.stringify(activitiesDB));
-  populateActivityDropdowns();
-  renderActivitiesAdmin();
+  populateActivityDropdowns(); renderActivitiesAdmin();
   try {
     const res = await fetch(GAS_WEBAPP_URL, {
       method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1160,12 +1385,10 @@ function recordAttendance(nis, nama, rombel) {
   const tanggal = document.getElementById('scan-date').value;
   const kegiatan = document.getElementById('scan-kegiatan').value;
   const recId = `${tanggal}_${kegiatan}_${nis}`;
-
   const existing = logsDB.find(l => l.id === recId);
   if (existing && existing.status === currentScanStatus) {
     playBeep(false); showScanFeedback(`Sudah Absen: ${nama} (${rombel}) — ${existing.status}`, 'warn'); return;
   }
-
   const waktu = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   const record = { id: recId, tanggal, waktu, kegiatan, nis: String(nis), nama, rombel: String(rombel).toUpperCase(), status: currentScanStatus, petugas: currentUser ? currentUser.name : '-' };
 
@@ -1173,7 +1396,6 @@ function recordAttendance(nis, nama, rombel) {
   pendingQueue = pendingQueue.filter(l => l.id !== recId); pendingQueue.push(record);
   localStorage.setItem('absen_logs_db', JSON.stringify(logsDB));
   localStorage.setItem('absen_pending_queue', JSON.stringify(pendingQueue));
-
   playBeep(true); showScanFeedback(`✓ ${nama} (${rombel}) — ${currentScanStatus}`, 'ok');
   updatePendingBadge(); renderScanStats();
   if (pendingQueue.length >= 15) flushAttendanceQueue(false);
@@ -1243,41 +1465,39 @@ function renderScanStats() {
     </div>`).join('');
 }
 
-function makeQrSvg(text, cellSize = 2) {
-  try { const qr = qrcode(0, 'M'); qr.addData(text); qr.make(); return qr.createSvgTag({ cellSize, margin: 1, scalable: true }); } catch (e) { return ''; }
-}
-const KEPSEK_QR_SVG = makeQrSvg(KEPSEK_DATA.signUrl, 2);
-
 function buildSingleCardHtml(stu) {
   const studentQrSvg = makeQrSvg(`${stu.nis}|${stu.name}|${stu.rombel}`, 2);
   return `
     <div class="id-card">
-      <div>
-        <img src="kop.png" alt="Kop Sekolah" class="w-full h-auto max-h-[10.5mm] object-contain mx-auto"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-        <div style="display:none;" class="text-center font-extrabold text-[8pt] leading-tight">SMA NEGERI 1 YOSOWILANGUN</div>
-        <div class="border-b border-slate-900 my-0.5"></div>
-        <div class="text-center font-extrabold text-[6.8pt] tracking-wider uppercase text-emerald-950">KARTU ABSENSI KEGIATAN KEAGAMAAN</div>
-      </div>
-      <div class="flex items-center gap-2 my-0.5">
-        <div class="shrink-0 p-0.5 border border-slate-300 rounded bg-white"><div class="card-qr-student">${studentQrSvg}</div></div>
-        <div class="flex-1 min-w-0 flex flex-col justify-between h-[24mm]">
-          <div class="leading-tight">
-            <div class="font-extrabold text-[7.8pt] text-slate-900 truncate uppercase">${stu.name}</div>
-            <div class="text-[6.8pt] text-slate-700">NIS: <strong>${stu.nis}</strong> &nbsp;|&nbsp; Kelas: <strong>${stu.rombel}</strong></div>
-          </div>
-          <div class="flex items-end justify-end gap-1.5 border-t border-slate-200 pt-0.5">
-            <div class="text-right leading-tight">
-              <div class="text-[5.2pt] text-slate-600">Mengesahkan, Kepala Sekolah</div>
-              <div class="text-[5.8pt] font-bold text-slate-900">${KEPSEK_DATA.name}</div>
-              <div class="text-[5pt] text-slate-600">NIP. ${KEPSEK_DATA.nip}</div>
+      <img src="bg-kartu.png" class="card-bg-img" onerror="this.style.display='none'">
+      <div class="card-inner">
+        <div>
+          <img src="kop.png" alt="Kop Sekolah" class="w-full h-auto max-h-[10mm] object-contain mx-auto"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+          <div style="display:none;" class="text-center font-extrabold text-[8pt] leading-tight text-emerald-950">SMA NEGERI 1 YOSOWILANGUN</div>
+          <div class="border-b border-emerald-900 my-0.5"></div>
+          <div class="text-center font-extrabold text-[6.6pt] tracking-wider uppercase text-emerald-950">KARTU ABSENSI KEGIATAN KEAGAMAAN</div>
+        </div>
+        <div class="flex items-center gap-2 my-0.5">
+          <div class="shrink-0 p-0.5 border border-emerald-700/40 rounded bg-white shadow-sm"><div class="card-qr-student">${studentQrSvg}</div></div>
+          <div class="flex-1 min-w-0 flex flex-col justify-between h-[23.5mm]">
+            <div class="leading-tight">
+              <div class="font-extrabold text-[7.8pt] text-emerald-950 truncate uppercase">${stu.name}</div>
+              <div class="text-[6.7pt] text-slate-700">NIS: <strong>${stu.nis}</strong> &nbsp;|&nbsp; Kelas: <strong>${stu.rombel}</strong></div>
             </div>
-            <div class="card-qr-kepsek border border-slate-200 p-[1px] rounded bg-white shrink-0">${KEPSEK_QR_SVG}</div>
+            <div class="flex items-end justify-end gap-1.5 border-t border-amber-500/40 pt-0.5">
+              <div class="text-right leading-tight">
+                <div class="text-[5pt] text-slate-600">Mengesahkan, Kepala Sekolah</div>
+                <div class="text-[5.7pt] font-bold text-slate-900">${KEPSEK_DATA.name}</div>
+                <div class="text-[4.9pt] text-slate-600">NIP. ${KEPSEK_DATA.nip}</div>
+              </div>
+              <div class="card-qr-kepsek border border-slate-200 p-[1px] rounded bg-white shrink-0">${KEPSEK_QR_SVG}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="bg-emerald-50 border-t border-emerald-200 -mx-[2.8mm] -mb-[2.2mm] px-[2.8mm] py-[1.2mm] text-[5.3pt] leading-tight text-slate-700">
-        <strong>Tata Tertib:</strong> (1) Wajib dibawa setiap kegiatan ibadah &amp; keagamaan di sekolah. (2) Dilarang keras menitipkan/meminjamkan kartu saat absen. (3) Jaga kartu dengan baik; segera lapor Guru PAI jika hilang/rusak.
+        <div class="bg-emerald-900 text-emerald-50 -mx-[2.6mm] -mb-[2mm] px-[2.6mm] py-[1.2mm] text-[5.1pt] leading-tight">
+          <strong class="text-amber-300">Tata Tertib:</strong> (1) Wajib dibawa setiap kegiatan ibadah &amp; keagamaan di sekolah. (2) Dilarang menitipkan/meminjamkan kartu saat absen. (3) Segera lapor Guru PAI jika hilang/rusak.
+        </div>
       </div>
     </div>`;
 }
@@ -1306,8 +1526,7 @@ function printCards(mode) {
   for (let i = 0; i < list.length; i += 8) {
     sheets.push(`<div class="a4-card-sheet">${list.slice(i, i + 8).map(s => buildSingleCardHtml(s)).join('')}</div>`);
   }
-  document.getElementById('print-area-cards').innerHTML = sheets.join('');
-  window.print();
+  triggerPrint('card', sheets.join(''));
 }
 
 window.addEventListener('DOMContentLoaded', () => { loadPublicDashboard(); });
