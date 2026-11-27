@@ -140,7 +140,7 @@
     <section class="space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h2 class="font-extrabold text-base text-slate-800"><i class="fa-solid fa-chart-simple text-emerald-700 mr-1.5"></i>Dashboard Kehadiran Hari Ini</h2>
+          <h2 class="font-extrabold text-base text-slate-800">📊 Dashboard Kehadiran Hari Ini</h2>
           <p id="pub-meta-info" class="text-xs text-slate-500">Memuat data terbaru...</p>
         </div>
         <span id="pub-sem-badge" class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">Semester -</span>
@@ -148,33 +148,71 @@
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
-          <div class="text-[11px] font-bold uppercase text-slate-400">Total Scan Hari Ini</div>
+          <div class="text-[11px] font-bold uppercase text-slate-400">🕌 Total Scan Hari Ini</div>
           <div id="pub-stat-total" class="text-2xl font-extrabold text-slate-800 mt-1">-</div>
         </div>
         <div class="bg-emerald-50 rounded-2xl p-4 border border-emerald-200 shadow-sm">
-          <div class="text-[11px] font-bold uppercase text-emerald-700">Hadir</div>
+          <div class="text-[11px] font-bold uppercase text-emerald-700">✅ Hadir</div>
           <div id="pub-stat-hadir" class="text-2xl font-extrabold text-emerald-800 mt-1">-</div>
         </div>
         <div class="bg-pink-50 rounded-2xl p-4 border border-pink-200 shadow-sm">
-          <div class="text-[11px] font-bold uppercase text-pink-700">Haid / Udzur</div>
+          <div class="text-[11px] font-bold uppercase text-pink-700">🌸 Haid / Udzur</div>
           <div id="pub-stat-haid" class="text-2xl font-extrabold text-pink-800 mt-1">-</div>
         </div>
         <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 shadow-sm">
-          <div class="text-[11px] font-bold uppercase text-amber-700">Izin / Sakit</div>
+          <div class="text-[11px] font-bold uppercase text-amber-700">📝 Izin / Sakit</div>
           <div id="pub-stat-izin" class="text-2xl font-extrabold text-amber-800 mt-1">-</div>
         </div>
       </div>
 
+      <!-- 1. PERINGKAT KELAS TERAJIN -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
           <div>
-            <h3 class="font-extrabold text-sm text-slate-800"><i class="fa-solid fa-trophy text-amber-500 mr-1.5"></i>Peringkat Kelas Terajin Sholat Berjamaah</h3>
+            <h3 class="font-extrabold text-sm text-slate-800">🏆 Peringkat Kelas Terajin Sholat Berjamaah</h3>
             <p class="text-[11px] text-slate-500">Akumulasi persentase kehadiran Sholat Dzuhur, Ashar, dan Jumat/Keputrian semester berjalan.</p>
           </div>
           <span id="pub-sessions-badge" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">0 Sesi</span>
         </div>
         <div id="pub-class-rankings" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div class="text-xs text-slate-400 py-4 text-center col-span-2">Memuat peringkat kelas...</div>
+        </div>
+      </div>
+
+      <!-- 2. GRAFIK WALI KELAS TERAKTIF (OPSI A) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-sky-200 p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="font-extrabold text-sm text-slate-800">👩‍🏫 Peringkat Wali Kelas Teraktif Mendampingi</h3>
+            <p class="text-[11px] text-slate-500">Berdasarkan keaktifan Wali Kelas turun langsung memindai kehadiran murid binaannya setiap sesi sholat.</p>
+          </div>
+          <span id="pub-wali-badge" class="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800 border border-sky-200">0 Wali Kelas</span>
+        </div>
+        <div id="pub-wali-rankings" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="text-xs text-slate-400 py-4 text-center col-span-2">Memuat peringkat wali kelas...</div>
+        </div>
+      </div>
+
+      <!-- 3. TOP MURID ISTIQOMAH & PEJUANG TERCEPAT HARI INI -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-amber-200 p-5">
+          <div class="mb-3">
+            <h3 class="font-extrabold text-sm text-slate-800">🌟 Top 10 Murid Paling Istiqomah</h3>
+            <p class="text-[11px] text-slate-500">Murid dengan tingkat kehadiran sholat berjamaah tertinggi & paling disiplin waktu.</p>
+          </div>
+          <div id="pub-top-students" class="divide-y divide-slate-100">
+            <div class="text-xs text-slate-400 py-4 text-center">Memuat murid terajin...</div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-emerald-200 p-5">
+          <div class="mb-3">
+            <h3 class="font-extrabold text-sm text-slate-800">⚡ Pejuang Ibadah Tercepat Hari Ini</h3>
+            <p class="text-[11px] text-slate-500">3 murid pertama yang hadir & melakukan scan sholat hari ini.</p>
+          </div>
+          <div id="pub-fastest-today" class="space-y-2.5">
+            <div class="text-xs text-slate-400 py-4 text-center">Memuat data hari ini...</div>
+          </div>
         </div>
       </div>
     </section>
@@ -282,6 +320,9 @@
   <main class="max-w-5xl mx-auto px-4 py-5">
     <!-- TAB 1: SCAN QR -->
     <section id="tab-scan" class="space-y-4">
+      <!-- INFO HAK AKSES SCAN (WALI KELAS vs GURU PAI/ADMIN) -->
+      <div id="scan-scope-banner" class="rounded-2xl px-4 py-2.5 text-xs font-bold border flex items-center gap-2"></div>
+
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 space-y-3">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
@@ -656,6 +697,33 @@ function makeQrSvg(text, cellSize = 2) {
 }
 const KEPSEK_QR_SVG = makeQrSvg(KEPSEK_DATA.signUrl, 2);
 
+// ==================== HELPER EMOJI WALI KELAS & HAK AKSES HYBRID ====================
+function getTeacherAvatarEmoji(name) {
+  const n = String(name || '').toLowerCase();
+  if (/(^|\s)(dra\.|hj\.|ibu|sri|siti|dewi|nur|endang|rina|fitri|yuni|ani|ratna|indah|tri|retno|lestari|juniati|wati|ningsih|putri|ayu|diana|laila|aisyah|fatimah|ika|eka|dwi|susanti|kartika|mega|novi|desi|erna|erna|luluk|titik|elok|enik|wiwik|ninik)(\s|,|$)/i.test(n)) {
+    return '👩‍🏫';
+  }
+  if (/(^|\s)(drs\.|h\.|pak|muhammad|moh\.|moch\.|ahmad|abdul|budi|agus|eko|dedi|fajar|hendri|irfan|arif|koyum|ujang|slamet|heru|imam|zainal|taufik|yusuf|andi|rizki|wahyu|rudi|santoso|wijaya|hadi|bambang|suyono|supriyadi)(\s|,|$)/i.test(n)) {
+    return '👨‍🏫';
+  }
+  return '🧑‍🏫';
+}
+
+// Hak Akses Hybrid:
+// - WALI_KELAS: terkunci khusus kelas binaannya (misal ['X-1'])
+// - GURU_PAI / KEPSEK / ADMIN / PIKET: bebas akses seluruh kelas ('ALL') untuk backup lapangan
+function getEffectiveAllowedClasses() {
+  if (!currentUser) return [];
+  const roleNorm = String(currentUser.role || '').trim().toUpperCase().replace(/\s+/g, '_');
+  if (roleNorm === 'WALI_KELAS') {
+    if (Array.isArray(currentUser.classes) && currentUser.classes.length > 0) {
+      return currentUser.classes.map(c => String(c).trim().toUpperCase());
+    }
+    return [];
+  }
+  return 'ALL';
+}
+
 // ==================== HELPER CETAK DINAMIS (PORTRAIT vs LANDSCAPE) ====================
 function triggerPrint(mode, htmlContent) {
   const pageStyle = document.getElementById('dynamic-print-page');
@@ -691,7 +759,6 @@ function buildSingleCertificateHtml(stu, pct, eventTitle, dateText) {
           <div class="cert-corner cert-bl"></div>
           <div class="cert-corner cert-br"></div>
 
-          <!-- Header Kop -->
           <div class="text-center">
             <img src="kop.png" alt="Kop Sekolah" class="h-[24mm] object-contain mx-auto mb-1"
               onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
@@ -699,7 +766,6 @@ function buildSingleCertificateHtml(stu, pct, eventTitle, dateText) {
             <div class="border-b-2 border-emerald-900 w-4/5 mx-auto my-1"></div>
           </div>
 
-          <!-- Isi Sertifikat -->
           <div class="text-center space-y-2 my-auto">
             <div class="font-serif-cert text-4xl font-extrabold tracking-[0.18em] text-emerald-950 uppercase">SERTIFIKAT</div>
             <div class="text-xs font-bold tracking-widest text-amber-700 uppercase">Nomor: ${certNo}</div>
@@ -711,7 +777,6 @@ function buildSingleCertificateHtml(stu, pct, eventTitle, dateText) {
             </p>
           </div>
 
-          <!-- Footer TTD QR Kepsek -->
           <div class="flex items-end justify-between px-6 pt-2">
             <div class="text-[10px] text-slate-500 max-w-[90mm] leading-snug">
               <em>Sertifikat ini diterbitkan secara elektronik dan sah berdasarkan data presensi resmi Sistem Keagamaan SMA Negeri 1 Yosowilangun.</em>
@@ -749,26 +814,98 @@ async function loadPublicDashboard() {
     document.getElementById('pub-stat-izin').textContent = d.todayStats.izin;
     document.getElementById('pub-sessions-badge').textContent = `${d.totalSholatSessions} Sesi Sholat Tercatat`;
 
+    // 1. Render Peringkat Kelas Terajin
     const rankEl = document.getElementById('pub-class-rankings');
     if (!d.classRankings || d.classRankings.length === 0) {
       rankEl.innerHTML = '<div class="text-xs text-slate-400 col-span-2 text-center py-4">Belum ada data kelas.</div>';
-      return;
+    } else {
+      rankEl.innerHTML = d.classRankings.map((c, idx) => {
+        const medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : `#${idx + 1}`));
+        const barColor = c.persentase >= 90 ? 'bg-emerald-600' : (c.persentase >= 75 ? 'bg-teal-500' : 'bg-amber-500');
+        return `
+          <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/70">
+            <div class="flex items-center justify-between text-xs mb-1.5">
+              <span class="font-extrabold text-slate-800">${medal} Kelas ${c.rombel} <span class="font-normal text-slate-500">(${c.jumlahMurid} murid)</span></span>
+              <span class="font-extrabold text-emerald-800">${c.persentase}%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+              <div class="${barColor} h-2 rounded-full transition-all" style="width:${c.persentase}%"></div>
+            </div>
+          </div>`;
+      }).join('');
     }
 
-    rankEl.innerHTML = d.classRankings.map((c, idx) => {
-      const medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : `#${idx + 1}`));
-      const barColor = c.persentase >= 90 ? 'bg-emerald-600' : (c.persentase >= 75 ? 'bg-teal-500' : 'bg-amber-500');
-      return `
-        <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/70">
-          <div class="flex items-center justify-between text-xs mb-1.5">
-            <span class="font-extrabold text-slate-800">${medal} Kelas ${c.rombel} <span class="font-normal text-slate-500">(${c.jumlahMurid} murid)</span></span>
-            <span class="font-extrabold text-emerald-800">${c.persentase}%</span>
-          </div>
-          <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
-            <div class="${barColor} h-2 rounded-full transition-all" style="width:${c.persentase}%"></div>
-          </div>
-        </div>`;
-    }).join('');
+    // 2. Render Grafik Wali Kelas Teraktif (Opsi A + Emoji Avatar)
+    const waliList = d.waliRankings || [];
+    document.getElementById('pub-wali-badge').textContent = `${waliList.length} Wali Kelas`;
+    const waliEl = document.getElementById('pub-wali-rankings');
+    if (waliList.length === 0) {
+      waliEl.innerHTML = '<div class="text-xs text-slate-400 col-span-2 text-center py-4">Belum ada akun dengan Role <strong>WALI_KELAS</strong> di sheet Users.</div>';
+    } else {
+      waliEl.innerHTML = waliList.map((w, idx) => {
+        const medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : `#${idx + 1}`));
+        const avatar = getTeacherAvatarEmoji(w.name);
+        const barColor = w.persentase >= 80 ? 'bg-sky-600' : (w.persentase >= 50 ? 'bg-teal-500' : 'bg-amber-500');
+        return `
+          <div class="p-3 rounded-xl border border-sky-100 bg-sky-50/40 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-white border border-sky-200 shadow-sm flex items-center justify-center text-xl shrink-0">${avatar}</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2 text-xs">
+                <span class="font-extrabold text-slate-800 truncate">${medal} ${w.name}</span>
+                <span class="font-extrabold text-sky-800 shrink-0">${w.persentase}%</span>
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500 mt-0.5 mb-1.5">
+                <span class="font-bold text-emerald-700">🏫 Wali Kelas ${w.rombel}</span>
+                <span>${w.sesiAktif}/${w.totalSesi} Sesi Scan</span>
+              </div>
+              <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                <div class="${barColor} h-2 rounded-full transition-all" style="width:${w.persentase}%"></div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // 3. Render Top 10 Murid Paling Istiqomah
+    const topStuEl = document.getElementById('pub-top-students');
+    const topStudents = d.topStudents || [];
+    if (topStudents.length === 0) {
+      topStuEl.innerHTML = '<div class="text-xs text-slate-400 py-4 text-center">Belum ada data kehadiran murid pada semester ini.</div>';
+    } else {
+      topStuEl.innerHTML = topStudents.map((s, idx) => {
+        const badge = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : `<span class="text-[11px] font-extrabold text-slate-400">#${idx + 1}</span>`));
+        return `
+          <div class="py-2 flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-6 text-center shrink-0">${badge}</div>
+              <div class="min-w-0">
+                <div class="font-bold text-slate-800 truncate">${s.name}</div>
+                <div class="text-[10px] text-slate-500">🏫 Kelas ${s.rombel} • ${s.hadir}/${s.totalSesi} Sesi</div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 font-extrabold text-[11px] shrink-0">⭐ ${s.persentase}%</span>
+          </div>`;
+      }).join('');
+    }
+
+    // 4. Render Pejuang Ibadah Tercepat Hari Ini
+    const fastEl = document.getElementById('pub-fastest-today');
+    const fastest = d.fastestToday || [];
+    if (fastest.length === 0) {
+      fastEl.innerHTML = '<div class="text-xs text-slate-400 py-6 text-center bg-slate-50 rounded-xl border border-dashed border-slate-200">Belum ada scan Hadir hari ini.</div>';
+    } else {
+      fastEl.innerHTML = fastest.map((f, idx) => {
+        const icon = idx === 0 ? '⚡🥇' : (idx === 1 ? '⚡🥈' : '⚡🥉');
+        return `
+          <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-2 text-xs">
+            <div class="min-w-0">
+              <div class="font-extrabold text-emerald-950 truncate">${icon} ${f.nama}</div>
+              <div class="text-[10px] text-emerald-700 mt-0.5">Kelas ${f.rombel} • ${f.kegiatan}</div>
+            </div>
+            <span class="px-2.5 py-1 rounded-lg bg-white border border-emerald-200 font-mono font-extrabold text-emerald-800 text-[11px] shrink-0">${f.waktu}</span>
+          </div>`;
+      }).join('');
+    }
   } catch (err) {
     document.getElementById('pub-meta-info').textContent = 'Gagal memuat data publik. Periksa koneksi internet.';
   }
@@ -1001,8 +1138,21 @@ function initWorkspace() {
 
   populateActivityDropdowns();
 
-  const allowedRombels = currentUser.classes === 'ALL' ? ALL_ROMBELS : currentUser.classes;
-  const rombelOptsWithAll = (allowedRombels.length > 1 ? '<option value="ALL">Semua Kelas Ampuan</option>' : '') +
+  const allowed = getEffectiveAllowedClasses();
+  const allowedRombels = allowed === 'ALL' ? ALL_ROMBELS : allowed;
+
+  // Tampilkan banner status hak akses scan
+  const scopeBanner = document.getElementById('scan-scope-banner');
+  if (allowed === 'ALL') {
+    scopeBanner.className = 'rounded-2xl px-4 py-2.5 text-xs font-bold border bg-emerald-50 border-emerald-200 text-emerald-900 flex items-center gap-2';
+    scopeBanner.innerHTML = '<span>🔓</span> <span>Mode Lintas Kelas Aktif: Anda dapat memindai &amp; membantu absensi seluruh kelas.</span>';
+  } else {
+    const avatar = getTeacherAvatarEmoji(currentUser.name);
+    scopeBanner.className = 'rounded-2xl px-4 py-2.5 text-xs font-bold border bg-amber-50 border-amber-300 text-amber-950 flex items-center gap-2';
+    scopeBanner.innerHTML = `<span>${avatar} 🔒</span> <span>Mode Khusus Wali Kelas: Pemindaian QR &amp; daftar murid dikhususkan untuk <strong>Kelas ${allowedRombels.join(', ')}</strong>.</span>`;
+  }
+
+  const rombelOptsWithAll = (allowedRombels.length > 1 ? '<option value="ALL">Semua Kelas</option>' : '') +
     allowedRombels.map(r => `<option value="${r}">Kelas ${r}</option>`).join('');
   const rombelOptsOnly = allowedRombels.map(r => `<option value="${r}">Kelas ${r}</option>`).join('');
 
@@ -1134,12 +1284,12 @@ function getFilteredRekap() {
   const tgl = document.getElementById('rekap-date').value;
   const keg = document.getElementById('rekap-kegiatan').value;
   const rom = document.getElementById('rekap-rombel').value;
-  const allowed = currentUser.classes === 'ALL' ? null : currentUser.classes;
+  const allowed = getEffectiveAllowedClasses();
   return logsDB.filter(l => {
     if (tgl && l.tanggal !== tgl) return false;
     if (keg !== 'ALL' && l.kegiatan !== keg) return false;
     if (rom !== 'ALL' && l.rombel !== rom) return false;
-    if (allowed && !allowed.includes(l.rombel)) return false;
+    if (allowed !== 'ALL' && !allowed.includes(String(l.rombel).toUpperCase())) return false;
     return true;
   });
 }
@@ -1167,14 +1317,14 @@ function getBelumAbsenList() {
   const tgl = document.getElementById('rekap-date').value;
   let keg = document.getElementById('rekap-kegiatan').value;
   const rom = document.getElementById('rekap-rombel').value;
-  const allowed = currentUser.classes === 'ALL' ? null : currentUser.classes;
+  const allowed = getEffectiveAllowedClasses();
   if (!tgl) return { list: [], tgl, keg, error: 'Pilih tanggal terlebih dahulu.' };
   if (keg === 'ALL') keg = activitiesDB[0]?.nama || 'Sholat Dzuhur';
 
   const scannedNis = new Set(logsDB.filter(l => l.tanggal === tgl && l.kegiatan === keg).map(l => String(l.nis)));
   const list = studentsDB.filter(s => {
     if (rom !== 'ALL' && s.rombel !== rom) return false;
-    if (allowed && !allowed.includes(s.rombel)) return false;
+    if (allowed !== 'ALL' && !allowed.includes(String(s.rombel).toUpperCase())) return false;
     return !scannedNis.has(String(s.nis));
   });
   return { list, tgl, keg, error: null };
@@ -1203,11 +1353,16 @@ function renderBelumAbsenTable() {
 }
 
 function quickAbsenFromBelum(nis, nama, rombel, status) {
+  const allowed = getEffectiveAllowedClasses();
+  if (allowed !== 'ALL' && !allowed.includes(String(rombel).toUpperCase())) {
+    alert(`Akses ditolak: Murid dari Kelas ${rombel} bukan kelas binaan Anda.`);
+    return;
+  }
   const tgl = document.getElementById('rekap-date').value;
   let keg = document.getElementById('rekap-kegiatan').value;
   if (keg === 'ALL') keg = activitiesDB[0]?.nama || 'Sholat Dzuhur';
   const recId = `${tgl}_${keg}_${nis}`;
-  const waktu = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const waktu = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\./g, ':');
   const record = { id: recId, tanggal: tgl, waktu, kegiatan: keg, nis: String(nis), nama, rombel: String(rombel).toUpperCase(), status, petugas: currentUser ? currentUser.name : '-' };
 
   logsDB = logsDB.filter(l => l.id !== recId); logsDB.unshift(record);
@@ -1251,13 +1406,13 @@ function computeWarningList() {
 
   const totalSessions = sessions.size;
   const romFilter = document.getElementById('warn-rombel').value;
-  const allowed = currentUser.classes === 'ALL' ? null : currentUser.classes;
+  const allowed = getEffectiveAllowedClasses();
   if (totalSessions === 0) return { list: [], totalSessions: 0, activeSem };
 
   const list = [];
   studentsDB.forEach(s => {
     if (romFilter !== 'ALL' && s.rombel !== romFilter) return;
-    if (allowed && !allowed.includes(s.rombel)) return;
+    if (allowed !== 'ALL' && !allowed.includes(String(s.rombel).toUpperCase())) return;
     const hadir = stuCounts[String(s.nis)] || 0;
     const pct = Math.min(100, Math.round((hadir / totalSessions) * 100));
     if (pct < 75) list.push({ ...s, hadir, total: totalSessions, pct });
@@ -1382,21 +1537,31 @@ function onQrCodeSuccess(decodedText) {
 }
 
 function recordAttendance(nis, nama, rombel) {
+  const rombelClean = String(rombel || '').trim().toUpperCase();
+  const allowed = getEffectiveAllowedClasses();
+
+  // PENGUNCIAN KHUSUS WALI KELAS: Tolak jika QR bukan dari kelas binaannya
+  if (allowed !== 'ALL' && !allowed.includes(rombelClean)) {
+    playBeep(false);
+    showScanFeedback(`⛔ Ditolak: ${nama} dari Kelas ${rombelClean}, bukan kelas binaan Anda (${allowed.join(', ')}).`, 'error');
+    return;
+  }
+
   const tanggal = document.getElementById('scan-date').value;
   const kegiatan = document.getElementById('scan-kegiatan').value;
   const recId = `${tanggal}_${kegiatan}_${nis}`;
   const existing = logsDB.find(l => l.id === recId);
   if (existing && existing.status === currentScanStatus) {
-    playBeep(false); showScanFeedback(`Sudah Absen: ${nama} (${rombel}) — ${existing.status}`, 'warn'); return;
+    playBeep(false); showScanFeedback(`Sudah Absen: ${nama} (${rombelClean}) — ${existing.status}`, 'warn'); return;
   }
-  const waktu = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  const record = { id: recId, tanggal, waktu, kegiatan, nis: String(nis), nama, rombel: String(rombel).toUpperCase(), status: currentScanStatus, petugas: currentUser ? currentUser.name : '-' };
+  const waktu = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\./g, ':');
+  const record = { id: recId, tanggal, waktu, kegiatan, nis: String(nis), nama, rombel: rombelClean, status: currentScanStatus, petugas: currentUser ? currentUser.name : '-' };
 
   logsDB = logsDB.filter(l => l.id !== recId); logsDB.unshift(record);
   pendingQueue = pendingQueue.filter(l => l.id !== recId); pendingQueue.push(record);
   localStorage.setItem('absen_logs_db', JSON.stringify(logsDB));
   localStorage.setItem('absen_pending_queue', JSON.stringify(pendingQueue));
-  playBeep(true); showScanFeedback(`✓ ${nama} (${rombel}) — ${currentScanStatus}`, 'ok');
+  playBeep(true); showScanFeedback(`✓ ${nama} (${rombelClean}) — ${currentScanStatus}`, 'ok');
   updatePendingBadge(); renderScanStats();
   if (pendingQueue.length >= 15) flushAttendanceQueue(false);
 }
@@ -1441,8 +1606,12 @@ function renderManualSearch(query) {
   const box = document.getElementById('manual-search-results');
   const q = query.trim().toLowerCase();
   if (q.length < 2) { box.innerHTML = ''; return; }
-  const matches = studentsDB.filter(s => s.name.toLowerCase().includes(q) || String(s.nis).includes(q)).slice(0, 12);
-  if (matches.length === 0) { box.innerHTML = '<div class="py-2 text-slate-400">Murid tidak ditemukan.</div>'; return; }
+  const allowed = getEffectiveAllowedClasses();
+  const matches = studentsDB.filter(s => {
+    if (allowed !== 'ALL' && !allowed.includes(String(s.rombel).toUpperCase())) return false;
+    return s.name.toLowerCase().includes(q) || String(s.nis).includes(q);
+  }).slice(0, 12);
+  if (matches.length === 0) { box.innerHTML = '<div class="py-2 text-slate-400">Murid tidak ditemukan pada kelas binaan Anda.</div>'; return; }
   box.innerHTML = matches.map(s => `
     <div class="py-2 flex items-center justify-between gap-2">
       <div><div class="font-bold text-slate-800">${s.name}</div><div class="text-[11px] text-slate-500">NIS: ${s.nis} • Kelas ${s.rombel}</div></div>
@@ -1454,7 +1623,12 @@ function renderManualSearch(query) {
 function renderScanStats() {
   const tgl = document.getElementById('scan-date').value;
   const keg = document.getElementById('scan-kegiatan').value;
-  const filtered = logsDB.filter(l => l.tanggal === tgl && l.kegiatan === keg);
+  const allowed = getEffectiveAllowedClasses();
+  const filtered = logsDB.filter(l => {
+    if (l.tanggal !== tgl || l.kegiatan !== keg) return false;
+    if (allowed !== 'ALL' && !allowed.includes(String(l.rombel).toUpperCase())) return false;
+    return true;
+  });
   document.getElementById('session-count-badge').textContent = `${filtered.length} Murid`;
   const listEl = document.getElementById('recent-scans-list');
   if (filtered.length === 0) { listEl.innerHTML = '<div class="py-4 text-center text-slate-400">Belum ada murid dipindai pada sesi ini.</div>'; return; }
